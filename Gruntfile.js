@@ -5,6 +5,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   //loads/enables the mocha package
   grunt.loadNpmTasks('grunt-simple-mocha');
+  //enable watch task to track changed files and run test
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.initConfig({
     jshint: {
@@ -27,6 +29,12 @@ module.exports = function(grunt) {
       dev: {
         src: ['test/**/*.js']
       }
+    },
+    watch: {
+      app: {
+        files: ['<%= jshint.dev.src %>', '<%= simplemocha.dev.src %>'],
+        tasks: ['jshint', 'simplemocha']
+      }
     }
   });
   //this runs a jshint test task in our dev sources
@@ -35,5 +43,5 @@ module.exports = function(grunt) {
   grunt.registerTask('mocha', ['simplemocha:dev']);
   /*this allows you to define the 'grunt' command as a 
   command to execute the jshint:dev labeled test, which is listed in the array. For now, we are only using our 'test' task which we created on line 25*/
-  grunt.registerTask('default', ['test', 'mocha']);
+  grunt.registerTask('default', ['test', 'mocha', 'watch']);
 };
