@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = function(grunt) {
-  //loads the jshint package
+  //loads/enables the jshint package
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  //loads the mocha package
-  grunt.loadNpmTasks('mocha');
+  //loads/enables the mocha package
+  grunt.loadNpmTasks('grunt-simple-mocha');
 
   grunt.initConfig({
     jshint: {
@@ -23,19 +23,16 @@ module.exports = function(grunt) {
         }
       }
     },
-    mocha: {
+    simplemocha: {
       dev: {
-        src: ['greet*.js', 'test/**/*/.js']
-      },
-      options: {
-        run: true
+        src: ['test/**/*.js']
       }
     }
   });
   //this runs a jshint test task in our dev sources
   grunt.registerTask('test', ['jshint:dev']);
   //this runs a mocha test task
-  grunt.registerTask('mocha', ['mocha:dev']);
+  grunt.registerTask('mocha', ['simplemocha:dev']);
   /*this allows you to define the 'grunt' command as a 
   command to execute the jshint:dev labeled test, which is listed in the array. For now, we are only using our 'test' task which we created on line 25*/
   grunt.registerTask('default', ['test', 'mocha']);
